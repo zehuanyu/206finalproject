@@ -112,13 +112,16 @@ def scrape_songs(url, db_path, start_index=0):
     Description:
         Scrapes song data from the provided URL, starting from the start_index.
         Collects information about song rankings, names, and artists, then associates them with artist IDs.
+        Limits the number of songs processed to 12 per execution.
     """
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     songs = []
     entries = soup.find_all('h3', {'class': 'c-title'})
+    
+    max_items = 12  # Set the maximum number of items to process
     for i, entry in enumerate(entries[start_index:], start=start_index):
-        if i >= start_index + 25:
+        if i >= start_index + max_items:
             break
         song_name = entry.get_text(strip=True)
         artist_element = entry.find_next('span', {'class': 'c-label'})
@@ -174,7 +177,8 @@ def main(url_2020, url_2021):
     conn.commit()
     conn.close()
 
-    set_last_processed_index(db_path, start_index + 25)
+    set_last_processed_index(db_path, start_index + 12)
+
 
 if __name__ == "__main__":
     url_2020 = "https://www.billboard.com/charts/year-end/2020/hot-100-songs/"
