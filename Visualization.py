@@ -36,11 +36,8 @@ def plot_artist_song_counts(stats):
     for year, artist_counts in stats.items():
         artists, counts = zip(*artist_counts)
         num_artists = len(artists)
-        
-        # Increase the figure size and adjust the bar width
-        plt.figure(figsize=(10, num_artists * 0.5))  # Adjust the multiplier as needed
-        plt.barh(artists, counts, height=0.5)  # Adjust the height as needed
-        
+        plt.figure(figsize=(10, num_artists * 0.5))
+        plt.barh(artists, counts, height=0.5)
         plt.xlabel('Number of Songs')
         plt.ylabel('Artist')
         plt.title(f'Number of Songs per Artist - Year {year}')
