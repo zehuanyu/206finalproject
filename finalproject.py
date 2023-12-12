@@ -119,7 +119,7 @@ def scrape_songs(url, db_path, start_index=0):
     songs = []
     entries = soup.find_all('h3', {'class': 'c-title'})
     
-    max_items = 12  # Set the maximum number of items to process
+    max_items = 12
     for i, entry in enumerate(entries[start_index:], start=start_index):
         if i >= start_index + max_items:
             break
